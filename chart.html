@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Regional Comparison: Rates vs Numbers</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .chart-container {
+            width: 90%;
+            max-width: 1200px;
+            height: 600px;
+            margin: 0 auto;
+            border: 1px solid #eee;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Regional Comparison: Rates vs Numbers</h1>
+    <div class="chart-container">
+        <canvas id="combinedChart"></canvas>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('combinedChart').getContext('2d');
+            const regions = [
+                'Western Europe', 'West and Central Africa', 'Eastern Europe and Central Asia',
+                'Eastern and Southern Africa', 'Middle East and North Africa', 'North America',
+                'Latin America and the Caribbean', 'East Asia and the Pacific', 'South Asia', 'World'
+            ];
+            const rates2018 = [15, 3, 11, 8, 13, 51, 34, 23, 23, 19];
+            const ratesToday = [10, 4, 12, 5, 14, 34, 26, 10, 24, 15];
+            const numbers2018 = [10000, 5000, 8000, 14000, 14000, 31000, 46000, 92000, 106000, 326000];
+            const numbersToday = [7000, 8000, 9000, 10000, 17000, 21000, 34000, 42000, 111000, 259000];
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: regions,
+                    datasets: [
+                        {
+                            label: 'Number 2018 (thousands)',
+                            data: numbers2018,
+                            backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1,
+                            yAxisID: 'yNumbers',
+                            barPercentage: 0.5,
+                            categoryPercentage: 0.5
+                        },
+                        {
+                            label: 'Number Today (thousands)',
+                            data: numbersToday,
+                            backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1,
+                            yAxisID: 'yNumbers',
+                            barPercentage: 0.6,
+                            categoryPercentage: 0.8,
+                            grouped: false
+                        },
+                        {
+                            label: 'Rate 2018 (per 100,000)',
+                            data: rates2018.map((rate, index) => ({ x: index, y: rate })),
+                            type: 'scatter',
+                            backgroundColor: 'rgba(54, 162, 235, 1)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            pointRadius: 6,
+                            pointHoverRadius: 8,
+                            yAxisID: 'yRates'
+                        },
+                        {
+                            label: 'Rate Today (per 100,000)',
+                            data: ratesToday.map((rate, index) => ({ x: index, y: rate })),
+                            type: 'scatter',
+                            backgroundColor: 'rgba(255, 99, 132, 1)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            pointRadius: 6,
+                            pointHoverRadius: 8,
+                            yAxisID: 'yRates'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function (context) {
+                                    let label = context.dataset.label || '';
+                                    if (label.includes('Rate')) {
+                                        return `${label}: ${context.parsed.y}`;
+                                    } else {
+                                        return `${label}: ${context.parsed.y.toLocaleString()}`;
+                                    }
+                                }
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                            labels: { font: { size: 12 } }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Regional Comparison: Rates vs Numbers',
+                            font: { size: 16 }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                font: { size: 11 },
+                                callback: function (value) {
+                                    const label = this.getLabelForValue(value);
+                                    return label.length > 15 ? label.split(' and ')[0] : label;
+                                }
+                            },
+                            grid: {
+                                display: false
+                            }
+                        },
+                        yNumbers: {
+                            display: false,
+                            grid: {
+                                display: false
+                            }
+                        },
+                        yRates: {
+                            display: false,
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
