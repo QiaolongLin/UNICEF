@@ -50,7 +50,7 @@
                     labels: regions,
                     datasets: [
                         {
-                            label: 'Around 2018 (number in thousands)',
+                            label: '2018 (number in thousands)',
                             data: numbers2018,
                             backgroundColor: '#c00000',
                             borderColor: '#c00000',
@@ -61,7 +61,7 @@
                             categoryPercentage: 0.8
                         },
                         {
-                            label: 'Today (number in thousands)',
+                            label: '2024 (number in thousands)',
                             data: numbersToday,
                             backgroundColor: '#f6c6ad',
                             borderColor: '#f6c6ad',
@@ -72,7 +72,7 @@
                             categoryPercentage: 0.8
                         },
                         {
-                            label: 'Around 2018 (rate per 100,000)',
+                            label: '2018 (rate per 100,000)',
                             data: rates2018.map((rate, index) => ({ x: index, y: rate })),
                             type: 'scatter',
                             backgroundColor: '#c00000',
@@ -87,7 +87,7 @@
   			    showLine: false
                         },
                         {
-                            label: 'Today (rate per 100,000)',
+                            label: '2024 (rate per 100,000)',
                             data: ratesToday.map((rate, index) => ({ x: index, y: rate })),
                             type: 'scatter',
                             backgroundColor: '#f6c6ad',
