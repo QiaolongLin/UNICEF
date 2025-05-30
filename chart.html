@@ -31,13 +31,14 @@
   			  'Western Europe',
   			  'West and\nCentral Africa',
   			  'Eastern Europe\nand Central Asia',
-   			  'Eastern and\nSouthern Africa',
-   			  'Middle East\nand North Africa',
+   			 'Eastern and\nSouthern Africa',
+   			 'Middle East\nand North Africa',
   			  'North America',
   			  'Latin America\nand the Caribbean',
- 			  'East Asia\nand the Pacific',
-  			  'South Asia',
- 			  'World'];
+ 			   'East Asia\nand the Pacific',
+  			'South Asia',
+ 			   'World'
+];
             const rates2018 = [15, 3, 11, 8, 13, 51, 34, 23, 23, 19];
             const ratesToday = [10, 4, 12, 5, 14, 34, 26, 10, 24, 15];
             const numbers2018 = [10000, 5000, 8000, 14000, 14000, 31000, 46000, 92000, 106000, 326000];
@@ -102,58 +103,79 @@
                         }
                     ]
                 },
-options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-        tooltip: {
-            mode: 'index',
-            intersect: false,
-            callbacks: {
-                label: function (context) {
-                    let label = context.dataset.label || '';
-                    if (label.includes('Rate')) {
-                        return `${label}: ${context.parsed.y}`;
-                    } else {
-                        return `${label}: ${context.parsed.y.toLocaleString()}`;
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function (context) {
+                                    let label = context.dataset.label || '';
+                                    if (label.includes('Rate')) {
+                                        return `${label}: ${context.parsed.y}`;
+                                    } else {
+                                        return `${label}: ${context.parsed.y.toLocaleString()}`;
+                                    }
+                                }
+                            }
+                        },
+                        legend: {
+                            position: 'bottom',
+                            labels: { 
+				font: { family: 'Roboto', size: 12 } ,
+				color:'black',
+				padding: 40,
+				usePointStyle: true, 
+			generateLabels: function(chart) {
+       				 const datasets = chart.data.datasets;
+       				 return datasets.map((dataset, i) => {
+      				 return {
+          				  text: dataset.label,
+          				  fillStyle: dataset.backgroundColor,
+         				  strokeStyle: dataset.borderColor,
+            				  lineWidth: dataset.borderWidth,
+            				  hidden: !chart.isDatasetVisible(i),
+           				  index: i,
+          				  pointStyle: dataset.type === 'scatter' ? 'circle' : 'rect',
+        				  usePointStyle: dataset.type === 'scatter'
+  					  };
+ 					  });
+ 					}
+  				    }	
+				},
+                            },
+                    scales: {
+                        x: {
+                            ticks: {
+                                font: { family: 'Roboto',size: 14},
+				color: 'black',
+				maxRotation: 45,
+				minRotation: 45,
+                                callback: function (value) {
+                                    const label = this.getLabelForValue(value);
+                                    return label.length > 15 ? label.split(' and ')[0] : label;
+                                }
+                            },
+                            grid: {
+                                display: false
+                            }
+                        },
+                        yNumbers: {
+                            display: false,
+                            grid: {
+                                display: false
+                            }
+                        },
+                        yRates: {
+                            display: false,
+                            grid: {
+                                display: false
+                            }
+                        }
                     }
                 }
-            }
-        },
-        legend: {
-            display: false // 直接关闭图例显示
-        }
-    },
-    scales: {
-        x: {
-            ticks: {
-                font: { family: 'Roboto', size: 14 },
-                color: 'black',
-                maxRotation: 45,
-                minRotation: 45,
-                callback: function (value) {
-                    const label = this.getLabelForValue(value);
-                    return label.length > 15 ? label.split(' and ')[0] : label;
-                }
-            },
-            grid: {
-                display: false
-            }
-        },
-        yNumbers: {
-            display: false,
-            grid: {
-                display: false
-            }
-        },
-        yRates: {
-            display: false,
-            grid: {
-                display: false
-            }
-        }
-    }
-}
             });
         });
     </script>
