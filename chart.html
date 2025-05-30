@@ -4,18 +4,26 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body {
+body {
             font-family: Roboto;
-            margin: 20px;
+            margin: 0; 
+            padding: 10px;
+            height: calc(100vh - 20px); 
+            box-sizing: border-box;
         }
         .chart-container {
-            width: 90%;
+            width: 100%;
             max-width: 1000px;
-            height: 550px;
+            height: calc(100% - 50px); 
             margin: 0 auto;
-            
-            padding: 20px;
-                    }
+            padding: 10px;
+            position: relative;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: calc(100% - 70px); 
+            }
+        }
     </style>
 </head>
 <body>
