@@ -4,14 +4,14 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-body {Add commentMore actions
+        body {
             font-family: Roboto;
             margin: 20px;
         }
         .chart-container {
             width: 90%;
             max-width: 1200px;
-            height: 600px;
+            height: 650px;
             margin: 0 auto;
             
             padding: 20px;
@@ -31,14 +31,13 @@ body {Add commentMore actions
   			  'Western Europe',
   			  'West and\nCentral Africa',
   			  'Eastern Europe\nand Central Asia',
-   			 'Eastern and\nSouthern Africa',
-   			 'Middle East\nand North Africa',
+   			  'Eastern and\nSouthern Africa',
+   			  'Middle East\nand North Africa',
   			  'North America',
   			  'Latin America\nand the Caribbean',
- 			   'East Asia\nand the Pacific',
-  			'South Asia',
- 			   'World'
-];
+ 			  'East Asia\nand the Pacific',
+  			  'South Asia',
+ 			  'World'];
             const rates2018 = [15, 3, 11, 8, 13, 51, 34, 23, 23, 19];
             const ratesToday = [10, 4, 12, 5, 14, 34, 26, 10, 24, 15];
             const numbers2018 = [10000, 5000, 8000, 14000, 14000, 31000, 46000, 92000, 106000, 326000];
@@ -103,55 +102,58 @@ body {Add commentMore actions
                         }
                     ]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false,
-                            callbacks: {
-                                label: function (context) {
-                                    let label = context.dataset.label || '';
-                                    if (label.includes('Rate')) {
-                                        return `${label}: ${context.parsed.y}`;
-                                    } else {
-                                        return `${label}: ${context.parsed.y.toLocaleString()}`;
-                                    }
-                                }
-                            }
-                        },
-
-                    scales: {
-                        x: {
-                            ticks: {
-                                font: { family: 'Roboto',size: 10},
-				color: 'black',
-				maxRotation: 45,
-				minRotation: 45,
-                                callback: function (value) {
-                                    const label = this.getLabelForValue(value);
-                                    return label.length > 15 ? label.split(' and ')[0] : label;
-                                }
-                            },
-                            grid: {
-                                display: false
-                            }
-                        },
-                        yNumbers: {
-                            display: false,
-                            grid: {
-                                display: false
-                            }
-                        },
-                        yRates: {
-                            display: false,
-                            grid: {
-                                display: false
-                            }
-                        }
+options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+        tooltip: {
+            mode: 'index',
+            intersect: false,
+            callbacks: {
+                label: function (context) {
+                    let label = context.dataset.label || '';
+                    if (label.includes('Rate')) {
+                        return `${label}: ${context.parsed.y}`;
+                    } else {
+                        return `${label}: ${context.parsed.y.toLocaleString()}`;
                     }
                 }
+            }
+        },
+        legend: {
+            display: false // 直接关闭图例显示
+        }
+    },
+    scales: {
+        x: {
+            ticks: {
+                font: { family: 'Roboto', size: 14 },
+                color: 'black',
+                maxRotation: 45,
+                minRotation: 45,
+                callback: function (value) {
+                    const label = this.getLabelForValue(value);
+                    return label.length > 15 ? label.split(' and ')[0] : label;
+                }
+            },
+            grid: {
+                display: false
+            }
+        },
+        yNumbers: {
+            display: false,
+            grid: {
+                display: false
+            }
+        },
+        yRates: {
+            display: false,
+            grid: {
+                display: false
+            }
+        }
+    }
+}
             });
         });
     </script>
